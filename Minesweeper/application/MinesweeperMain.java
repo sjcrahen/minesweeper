@@ -3,7 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Minesweeper extends Application {
+public class MinesweeperMain extends Application {
     
     private static Stage window;
     

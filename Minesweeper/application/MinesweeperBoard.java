@@ -45,7 +45,7 @@ public class MinesweeperBoard {
         FlowPane.setMargin(Minefield.getMinefield(), new Insets(0, 10, 10, 10));
         
         scene = new Scene(gameBoard);
-        Minesweeper.getStage().setScene(scene);
+        MinesweeperMain.getStage().setScene(scene);
     }
     
     static boolean isGameOn() {
@@ -76,7 +76,7 @@ public class MinesweeperBoard {
         gameBoard.getChildren().addAll(MinesweeperDashboard.getDashboard(), Minefield.getMinefield());
           
         scene.setRoot(gameBoard);
-        Minesweeper.getStage().setScene(scene);
+        MinesweeperMain.getStage().setScene(scene);
     }
     
     static EventHandler<ActionEvent> gameCounter = e -> {
