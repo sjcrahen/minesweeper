@@ -18,60 +18,29 @@ public class Minefield {
     
     public static final int ROWS = 16;
     public static final int COLUMNS = 30;
-    private static MinefieldCell[][] cellsMatrix;
+    private static MinefieldCell[][] cellsMatrix = new MinefieldCell[ROWS][COLUMNS];
+    private static StringProperty numberOfUnflaggedMinesStringProperty = new SimpleStringProperty();
+    private static TilePane minefield = new TilePane();
+    private static StackPane minefieldStackPane = new StackPane();
     private static int numberOfMines;
     private static int numberOfUnflaggedMines;
-    private static StringProperty numberOfUnflaggedMinesProperty;
-    private static TilePane minefieldGrid;
-    private static StackPane minefieldPane;
     
-    private Minefield() {
-
-    }
+    private Minefield() {}
     
     public static void buildNewMinefield() {
-        cellsMatrix = new MinefieldCell[ROWS][COLUMNS];
         placeMines();
         numberOfUnflaggedMines = numberOfMines;
-        numberOfUnflaggedMinesProperty = new SimpleStringProperty(Integer.toString(numberOfUnflaggedMines));
+        numberOfUnflaggedMinesStringProperty.setValue(zeroPaddedNumberString(numberOfUnflaggedMines));
         setValuesForNonMineCells();
         
-        minefieldGrid = new TilePane();
-        for (int row = 0; row < cellsMatrix.length; row++) {
-            minefieldGrid.getChildren().addAll(cellsMatrix[row]);
-        }
-
-        minefieldPane = new StackPane(minefieldGrid);
-        minefieldPane.setMinWidth(COLUMNS * cellsMatrix[0][0].getMinWidth() + 4);
-        minefieldPane.setMaxWidth(COLUMNS * cellsMatrix[0][0].getMinWidth() + 4);
-        minefieldPane.setMinHeight(ROWS * cellsMatrix[0][0].getMinHeight() + 4);
-        minefieldPane.setMaxHeight(ROWS * cellsMatrix[0][0].getMinHeight() + 4);
-        minefieldPane.setBorder(new Border(new BorderStroke(
-            Color.GRAY, Color.WHITE, Color.WHITE, Color.GRAY, 
-            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null), 
-            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null), 
-            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null),
-            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null),
-            null, new BorderWidths(2), null)));
-    }
-    
-    public static void reset() {
-        placeMines();
-        setValuesForNonMineCells();
+        addCellsToMinefield();
         
-        minefieldGrid.getChildren().clear();
-        for (int row = 0; row < cellsMatrix.length; row++) {
-            minefieldGrid.getChildren().addAll(cellsMatrix[row]);
-        }
-        minefieldPane.getChildren().clear();
-        minefieldPane.getChildren().add(minefieldGrid);
-        
-        numberOfUnflaggedMines = numberOfMines;
-        numberOfUnflaggedMinesProperty.setValue(Integer.toString(numberOfUnflaggedMines));
+        styleMinefieldStackPane();
+        placeMinefieldInStackPane();
     }
     
     public static Pane getMinefield() {
-        return minefieldPane;
+        return minefieldStackPane;
     }
     
     private static void placeMines() {
@@ -114,6 +83,44 @@ public class Minefield {
         return numberOfAdjacentMines;
     }
     
+    private static void addCellsToMinefield() {
+        minefield.getChildren().clear();
+        for (int row = 0; row < cellsMatrix.length; row++) {
+            minefield.getChildren().addAll(cellsMatrix[row]);
+        }
+    }
+    
+    private static void styleMinefieldStackPane() {
+        minefieldStackPane.setMinWidth(COLUMNS * cellsMatrix[0][0].getMinWidth() + 4);
+        minefieldStackPane.setMaxWidth(COLUMNS * cellsMatrix[0][0].getMinWidth() + 4);
+        minefieldStackPane.setMinHeight(ROWS * cellsMatrix[0][0].getMinHeight() + 4);
+        minefieldStackPane.setMaxHeight(ROWS * cellsMatrix[0][0].getMinHeight() + 4);
+        minefieldStackPane.setBorder(new Border(new BorderStroke(
+            Color.GRAY, Color.WHITE, Color.WHITE, Color.GRAY, 
+            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null), 
+            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null), 
+            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null),
+            new BorderStrokeStyle(StrokeType.INSIDE, null, null, 10, 0, null),
+            null, new BorderWidths(2), null)));
+    }
+    
+    private static void placeMinefieldInStackPane() {
+        minefieldStackPane.getChildren().clear();
+        minefieldStackPane.getChildren().add(minefield);
+    }
+    
+    private static String zeroPaddedNumberString(int num) {
+        StringBuffer sb = new StringBuffer();
+        if (num > 99) sb.append(num);
+        else if (num > 9) sb.append("0" + num);
+        else sb.append("00" + num);
+        return sb.toString();
+    }
+    
+    public static String getNumberOfUnflaggedMinesAsString() {
+        return zeroPaddedNumberString(numberOfUnflaggedMines);
+    }
+    
     public static int getNumberOfUnflaggedMines() {
         return numberOfUnflaggedMines;
     }
@@ -126,8 +133,8 @@ public class Minefield {
         numberOfUnflaggedMines++;
     }
     
-    public static StringProperty getNumberOfUnflaggedMinesProperty() {
-        return numberOfUnflaggedMinesProperty;
+    public static StringProperty getNumberOfUnflaggedMinesStringProperty() {
+        return numberOfUnflaggedMinesStringProperty;
     }
     
     public static MinefieldCell[][] getCellsMatrix() {

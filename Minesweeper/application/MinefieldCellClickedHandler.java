@@ -18,11 +18,12 @@ public class MinefieldCellClickedHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (MinesweeperBoard.isGameOn()) {
+        if (MinesweeperBoard.gameIsOn()) {
             MinefieldCell clickedCell = (MinefieldCell)event.getSource();
             if (event.getButton() == MouseButton.PRIMARY) {
                 startAnimation();
-                MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.SCARED);
+                if(!clickedCell.isRevealed())
+                    MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.SCARED);
                 revealThis(clickedCell);
             }
             else if (event.getButton() == MouseButton.SECONDARY) {
@@ -39,8 +40,8 @@ public class MinefieldCellClickedHandler implements EventHandler<MouseEvent> {
     }
 
     private void startAnimation() {
-        if (MinesweeperBoard.getAnimation().getStatus() == Animation.Status.STOPPED)
-            MinesweeperBoard.getAnimation().play();
+        if (MinesweeperDashboard.getAnimation().getStatus() == Animation.Status.STOPPED)
+            MinesweeperDashboard.getAnimation().play();
     }
 
     private void revealThis(MinefieldCell cell) {
@@ -65,14 +66,14 @@ public class MinefieldCellClickedHandler implements EventHandler<MouseEvent> {
         clickedCell.getChildren().add(new MinesweeperLabel("flag"));
         clickedCell.setFlagged(true);
         Minefield.decrementNumberOfUnflaggedMines();
-        Minefield.getNumberOfUnflaggedMinesProperty().setValue(Integer.toString(Minefield.getNumberOfUnflaggedMines()));
+        Minefield.getNumberOfUnflaggedMinesStringProperty().setValue(Minefield.getNumberOfUnflaggedMinesAsString());
     }
 
     private void removeFlagFromThis(MinefieldCell clickedCell) {
         clickedCell.getChildren().clear();
         clickedCell.setFlagged(false);
         Minefield.incrementNumberOfUnflaggedMines();
-        Minefield.getNumberOfUnflaggedMinesProperty().setValue(Integer.toString(Minefield.getNumberOfUnflaggedMines()));
+        Minefield.getNumberOfUnflaggedMinesStringProperty().setValue(Minefield.getNumberOfUnflaggedMinesAsString());
     }
     
     private void displayMineOnThis(MinefieldCell cell) {
@@ -84,8 +85,8 @@ public class MinefieldCellClickedHandler implements EventHandler<MouseEvent> {
     }
     
     private void stopGame() {
-        MinesweeperBoard.getAnimation().stop();
         MinesweeperBoard.setGameOn(false);
+        MinesweeperDashboard.getAnimation().stop();
         MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.GAME_OVER);
     }
     

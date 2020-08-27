@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 public class AdjacentCellsListBuilder {
     
-    private AdjacentCellsListBuilder() {
-        
-    }
+    private AdjacentCellsListBuilder() {} // prevent instantiation
     
     public static ArrayList<MinefieldCell> build(MinefieldCell[][] cellsMatrix, int row, int col) {
         ArrayList<MinefieldCell> cellsList = new ArrayList<>();
