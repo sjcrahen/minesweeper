@@ -26,8 +26,8 @@ import javafx.util.Duration;
 
 public class MinesweeperDashboard {
 
-    private static Timeline animation;
-    private static int gameTime;
+    private static Timeline gameClock;
+    private static int elapsedTimeInSeconds;
     private static StringProperty gameTimeProperty;
     private static MinesweeperResetButton resetButton;
     private static StackPane mineCountPane;
@@ -39,10 +39,10 @@ public class MinesweeperDashboard {
     private MinesweeperDashboard() {}
     
     public static void buildNewMinesweeperDashboard() {        
-        animation = new Timeline(new KeyFrame(Duration.millis(1000), gameCounter));
-        animation.setCycleCount(Timeline.INDEFINITE);
+        gameClock = new Timeline(new KeyFrame(Duration.millis(1000), countSeconds));
+        gameClock.setCycleCount(Timeline.INDEFINITE);
         gameTimeProperty = new SimpleStringProperty();
-        initGameTimer();
+        initGameClock();
         
         mineCountPane = new StackPane();
         mineCountPane.setPrefWidth(70);
@@ -50,7 +50,7 @@ public class MinesweeperDashboard {
         mineCountPane.setMaxHeight(30);
         mineCountPane.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), null)));
         mineCountLabel = new Label();
-        mineCountLabel.textProperty().bind(Minefield.getNumberOfUnflaggedMinesStringProperty());
+        mineCountLabel.textProperty().bind(Minefield.getRemainingMinesStringProperty());
         mineCountLabel.setFont(Font.font(null, FontWeight.BOLD, 30.0));
         mineCountLabel.setTextFill(Color.RED);
         mineCountPane.getChildren().add(mineCountLabel);
@@ -90,20 +90,20 @@ public class MinesweeperDashboard {
     
     public static void resetDashboard() {
         resetButton.setButtonLabel(MinesweeperResetButton.SMILE);
-        initGameTimer();
+        initGameClock();
     }
     
-    private static void initGameTimer() {
-        gameTime = 0;
-        gameTimeProperty.setValue(zeroPaddedNumberString(gameTime));
+    private static void initGameClock() {
+        elapsedTimeInSeconds = 0;
+        gameTimeProperty.setValue(zeroPaddedNumberString(elapsedTimeInSeconds));
     }
     
     static StringProperty getGameTimeProperty() {
         return gameTimeProperty;
     }
     
-    static Timeline getAnimation() {
-        return animation;
+    static Timeline getGameClock() {
+        return gameClock;
     }
     
     static HBox getDashboard() {
@@ -122,8 +122,8 @@ public class MinesweeperDashboard {
         return sb.toString();
     }
     
-    static EventHandler<ActionEvent> gameCounter = e -> {
-        gameTime++;
-        gameTimeProperty.setValue(zeroPaddedNumberString(gameTime));
+    static EventHandler<ActionEvent> countSeconds = e -> {
+        elapsedTimeInSeconds++;
+        gameTimeProperty.setValue(zeroPaddedNumberString(elapsedTimeInSeconds));
     };
 }

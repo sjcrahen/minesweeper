@@ -39,7 +39,7 @@ public class MinefieldCell extends StackPane {
 
         setOnMousePressed(new MinefieldCellClickHandler());
         setOnMouseReleased(e -> {
-            if(MinesweeperBoard.gameIsOn())
+            if(Minesweeper.gameIsOn())
                 MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.SMILE);
         });
     }

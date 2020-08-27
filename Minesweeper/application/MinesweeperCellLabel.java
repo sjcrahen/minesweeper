@@ -7,9 +7,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class MinesweeperLabel extends Label {
+public class MinesweeperCellLabel extends Label {
     
-    public MinesweeperLabel(String label) {
+    public MinesweeperCellLabel(String label) {
         if (label.equals("flag"))
             this.setGraphic(new ImageView(new Image("application/Flag.png", 14, 14, true, true)));
         else if (label.equals("mine"))
@@ -18,7 +18,7 @@ public class MinesweeperLabel extends Label {
             this.setGraphic(new ImageView(new Image("application/UnexplodedMine.png", 19, 19, false, true)));
     }
     
-    public MinesweeperLabel(int value) {
+    public MinesweeperCellLabel(int value) {
         this.setText(Integer.toString(value));
         this.setFont(Font.font(null, FontWeight.BOLD, 14.0));
         setFontColor();

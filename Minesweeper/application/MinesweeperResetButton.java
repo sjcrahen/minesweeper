@@ -40,8 +40,7 @@ public class MinesweeperResetButton extends StackPane {
                 Color.GRAY, 
                 new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null), 
                 null, new BorderWidths(2, 1, 1, 2))));
-            MinesweeperDashboard.getAnimation().stop();
-            MinesweeperBoard.setGameOn(false);
+            MinesweeperDashboard.getGameClock().stop();
         });
         
         setOnMouseReleased(e -> {
@@ -53,7 +52,7 @@ public class MinesweeperResetButton extends StackPane {
                 new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null),
                 null, new BorderWidths(2), null)));
             setButtonLabel(SMILE);
-            MinesweeperMain.resetGame();
+            Minesweeper.resetGame();
         });
     }
     

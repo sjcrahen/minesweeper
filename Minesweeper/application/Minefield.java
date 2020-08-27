@@ -19,23 +19,27 @@ public class Minefield {
     public static final int ROWS = 16;
     public static final int COLUMNS = 30;
     private static MinefieldCell[][] cellsMatrix = new MinefieldCell[ROWS][COLUMNS];
-    private static StringProperty numberOfUnflaggedMinesStringProperty = new SimpleStringProperty();
+    private static StringProperty remainingMinesStringProperty = new SimpleStringProperty();
     private static TilePane minefield = new TilePane();
     private static StackPane minefieldStackPane = new StackPane();
-    private static int numberOfMines;
-    private static int numberOfUnflaggedMines;
+    private static int remainingMines;
     
     private Minefield() {}
     
     public static void buildNewMinefield() {
         placeMines();
-        numberOfUnflaggedMines = numberOfMines;
-        numberOfUnflaggedMinesStringProperty.setValue(zeroPaddedNumberString(numberOfUnflaggedMines));
         setValuesForNonMineCells();
-        
-        addCellsToMinefield();
-        
+        remainingMinesStringProperty.setValue(zeroPaddedNumberString(remainingMines));
+        populateMinefieldWithCells();
         styleMinefieldStackPane();
+        placeMinefieldInStackPane();
+    }
+    
+    public static void resetMinefield() {
+        placeMines();
+        setValuesForNonMineCells();
+        remainingMinesStringProperty.setValue(zeroPaddedNumberString(remainingMines));
+        populateMinefieldWithCells();
         placeMinefieldInStackPane();
     }
     
@@ -44,13 +48,13 @@ public class Minefield {
     }
     
     private static void placeMines() {
-        numberOfMines = 0;
+        remainingMines = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 cellsMatrix[row][col] = new MinefieldCell(row, col);
                 int value = 0;
                 if (Math.random() < 0.2) {
-                    numberOfMines++;
+                    remainingMines++;
                     value = -1;
                 }
                 cellsMatrix[row][col].setValue(value);
@@ -83,7 +87,7 @@ public class Minefield {
         return numberOfAdjacentMines;
     }
     
-    private static void addCellsToMinefield() {
+    private static void populateMinefieldWithCells() {
         minefield.getChildren().clear();
         for (int row = 0; row < cellsMatrix.length; row++) {
             minefield.getChildren().addAll(cellsMatrix[row]);
@@ -117,24 +121,24 @@ public class Minefield {
         return sb.toString();
     }
     
-    public static String getNumberOfUnflaggedMinesAsString() {
-        return zeroPaddedNumberString(numberOfUnflaggedMines);
+    public static String getNumberOfRemainingMinesAsString() {
+        return zeroPaddedNumberString(remainingMines);
     }
     
-    public static int getNumberOfUnflaggedMines() {
-        return numberOfUnflaggedMines;
+    public static int getNumberOfRemainingMines() {
+        return remainingMines;
     }
     
-    public static void decrementNumberOfUnflaggedMines() {
-        numberOfUnflaggedMines--;
+    public static void decrementNumberOfRemainingMines() {
+        remainingMines--;
     }
     
-    public static void incrementNumberOfUnflaggedMines() {
-        numberOfUnflaggedMines++;
+    public static void incrementNumberOfRemainingMines() {
+        remainingMines++;
     }
     
-    public static StringProperty getNumberOfUnflaggedMinesStringProperty() {
-        return numberOfUnflaggedMinesStringProperty;
+    public static StringProperty getRemainingMinesStringProperty() {
+        return remainingMinesStringProperty;
     }
     
     public static MinefieldCell[][] getCellsMatrix() {

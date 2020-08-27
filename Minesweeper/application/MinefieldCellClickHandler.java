@@ -18,18 +18,19 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (MinesweeperBoard.gameIsOn()) {
+        if (Minesweeper.gameIsOn()) {
             MinefieldCell clickedCell = (MinefieldCell)event.getSource();
             if (event.getButton() == MouseButton.PRIMARY) {
-                startAnimation();
-                if(!clickedCell.isRevealed())
+                startAnimationIfStopped();
+                if(!clickedCell.isRevealed() && !clickedCell.isflagged()) {
                     MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.SCARED);
+                }
                 revealThis(clickedCell);
             }
             else if (event.getButton() == MouseButton.SECONDARY) {
                 if (!clickedCell.isRevealed()) {
                     if (clickedCell.getChildren().isEmpty()) {
-                        setFlagOnThis(clickedCell);
+                        setFlagOnThis(clickedCell); 
                     }
                     else {
                         removeFlagFromThis(clickedCell);
@@ -39,9 +40,9 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
         }
     }
 
-    private void startAnimation() {
-        if (MinesweeperDashboard.getAnimation().getStatus() == Animation.Status.STOPPED)
-            MinesweeperDashboard.getAnimation().play();
+    private void startAnimationIfStopped() {
+        if (MinesweeperDashboard.getGameClock().getStatus() == Animation.Status.STOPPED)
+            MinesweeperDashboard.getGameClock().play();
     }
 
     private void revealThis(MinefieldCell cell) {
@@ -63,17 +64,17 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
     }
 
     private void setFlagOnThis(MinefieldCell clickedCell) {
-        clickedCell.getChildren().add(new MinesweeperLabel("flag"));
+        clickedCell.getChildren().add(new MinesweeperCellLabel("flag"));
         clickedCell.setFlagged(true);
-        Minefield.decrementNumberOfUnflaggedMines();
-        Minefield.getNumberOfUnflaggedMinesStringProperty().setValue(Minefield.getNumberOfUnflaggedMinesAsString());
+        Minefield.decrementNumberOfRemainingMines();
+        Minefield.getRemainingMinesStringProperty().setValue(Minefield.getNumberOfRemainingMinesAsString());
     }
 
     private void removeFlagFromThis(MinefieldCell clickedCell) {
         clickedCell.getChildren().clear();
         clickedCell.setFlagged(false);
-        Minefield.incrementNumberOfUnflaggedMines();
-        Minefield.getNumberOfUnflaggedMinesStringProperty().setValue(Minefield.getNumberOfUnflaggedMinesAsString());
+        Minefield.incrementNumberOfRemainingMines();
+        Minefield.getRemainingMinesStringProperty().setValue(Minefield.getNumberOfRemainingMinesAsString());
     }
     
     private void displayMineOnThis(MinefieldCell cell) {
@@ -81,12 +82,12 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
                 Color.GRAY, 
                 new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null), 
                 null, new BorderWidths(1))));
-        cell.getChildren().add(new MinesweeperLabel("mine"));
+        cell.getChildren().add(new MinesweeperCellLabel("mine"));
     }
     
     private void stopGame() {
-        MinesweeperBoard.setGameOn(false);
-        MinesweeperDashboard.getAnimation().stop();
+        Minesweeper.setGameOn(false);
+        MinesweeperDashboard.getGameClock().stop();
         MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.GAME_OVER);
     }
     
@@ -120,7 +121,7 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
                 Color.GRAY, 
                 new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null), 
                 null, new BorderWidths(1))));
-        cell.getChildren().add(new MinesweeperLabel(cell.getValue()));
+        cell.getChildren().add(new MinesweeperCellLabel(cell.getValue()));
     }
     
     private void displayUnexplodedMineOnThis(MinefieldCell cell) {
@@ -129,6 +130,6 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
                 Color.GRAY, 
                 new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null), 
                 null, new BorderWidths(1))));
-        cell.getChildren().add(new MinesweeperLabel("unexplodedMine"));
+        cell.getChildren().add(new MinesweeperCellLabel("unexplodedMine"));
     }
 }

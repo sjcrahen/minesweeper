@@ -3,15 +3,17 @@ package application;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class MinesweeperMain extends Application {
+public class Minesweeper extends Application {
     
     private static Stage window;
     private static MinesweeperBoard board;
+    private static boolean gameOn;
     
     @Override
     public void start(Stage stage) {
         window = stage;
         board = new MinesweeperBoard();
+        gameOn = true;
         window.setScene(board.getScene());
         window.setTitle("Minesweeper");
         window.setResizable(false);
@@ -20,7 +22,16 @@ public class MinesweeperMain extends Application {
     
     public static void resetGame() {
         board.resetBoard();
+        gameOn = true;
         window.setScene(board.getScene());
+    }
+    
+    static boolean gameIsOn() {
+        return gameOn;
+    }
+    
+    static void setGameOn(boolean gameStatus) {
+        gameOn = gameStatus;
     }
 
     public static void main(String[] args) {

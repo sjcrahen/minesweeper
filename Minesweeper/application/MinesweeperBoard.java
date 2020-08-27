@@ -9,14 +9,10 @@ import javafx.scene.paint.Color;
 
 public class MinesweeperBoard {
 
-    private static boolean gameOn;
-    private static FlowPane board;
-    private static Scene scene;
+    private FlowPane board;
+    private Scene scene;
     
-    public MinesweeperBoard() {
-        
-        gameOn = true;
-        
+    public MinesweeperBoard() {        
         Minefield.buildNewMinefield();
         MinesweeperDashboard.buildNewMinesweeperDashboard();
         
@@ -26,35 +22,27 @@ public class MinesweeperBoard {
         board.setPrefWidth(624);
         board.setPrefHeight(408);
         
-        board.getChildren().addAll(MinesweeperDashboard.getDashboard(), Minefield.getMinefield());
-        FlowPane.setMargin(MinesweeperDashboard.getDashboard(), new Insets(10, 10, 0, 10));
-        FlowPane.setMargin(Minefield.getMinefield(), new Insets(0, 10, 10, 10));
-        
+        addMinefieldAndDashboardToBoard();
+
         scene = new Scene(board);
     }
     
     public void resetBoard() {
-        gameOn = true;
-        
-        Minefield.buildNewMinefield();
+        Minefield.resetMinefield();
         MinesweeperDashboard.resetDashboard();
-        
-        board.getChildren().remove(1);
-        board.getChildren().add(Minefield.getMinefield());
-        FlowPane.setMargin(Minefield.getMinefield(), new Insets(0, 10, 10, 10));
+        addMinefieldAndDashboardToBoard();
           
         scene.setRoot(board);
     }
     
+    private void addMinefieldAndDashboardToBoard() {
+        board.getChildren().clear();
+        board.getChildren().addAll(MinesweeperDashboard.getDashboard(), Minefield.getMinefield());
+        FlowPane.setMargin(MinesweeperDashboard.getDashboard(), new Insets(10, 10, 0, 10));
+        FlowPane.setMargin(Minefield.getMinefield(), new Insets(0, 10, 10, 10));
+    }
+    
     public Scene getScene() {
         return scene;
-    }
-    
-    static boolean gameIsOn() {
-        return gameOn;
-    }
-    
-    static void setGameOn(boolean gameStatus) {
-        gameOn = gameStatus;
     }
 }
