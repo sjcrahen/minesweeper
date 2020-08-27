@@ -37,7 +37,7 @@ public class MinefieldCell extends StackPane {
             new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, USE_PREF_SIZE, USE_PREF_SIZE, null),
             null, new BorderWidths(2), null)));
 
-        setOnMousePressed(new MinefieldCellClickedHandler());
+        setOnMousePressed(new MinefieldCellClickHandler());
         setOnMouseReleased(e -> {
             if(MinesweeperBoard.gameIsOn())
                 MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.SMILE);

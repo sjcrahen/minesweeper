@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
 
-public class MinefieldCellClickedHandler implements EventHandler<MouseEvent> {
+public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {

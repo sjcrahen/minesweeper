@@ -106,11 +106,11 @@ public class MinesweeperDashboard {
         return animation;
     }
     
-    public static HBox getDashboard() {
+    static HBox getDashboard() {
         return dashPane;
     }
     
-    public static MinesweeperResetButton getResetButton() {
+    static MinesweeperResetButton getResetButton() {
         return resetButton;
     }
     
