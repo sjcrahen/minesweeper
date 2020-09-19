@@ -1,4 +1,3 @@
-package application;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;

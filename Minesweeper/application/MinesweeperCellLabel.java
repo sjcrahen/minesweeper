@@ -1,4 +1,5 @@
-package application;
+
+import java.io.InputStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,12 +11,16 @@ import javafx.scene.text.FontWeight;
 public class MinesweeperCellLabel extends Label {
     
     public MinesweeperCellLabel(String label) {
-        if (label.equals("flag"))
-            this.setGraphic(new ImageView(new Image("application/Flag.png", 14, 14, true, true)));
-        else if (label.equals("mine"))
-            this.setGraphic(new ImageView(new Image("application/Mine.png", 19, 19, false, true)));
-        else if (label.equals("unexplodedMine"))
-            this.setGraphic(new ImageView(new Image("application/UnexplodedMine.png", 19, 19, false, true)));
+        if (label.equals("flag")) {
+            InputStream isFlag = MinesweeperCellLabel.class.getResourceAsStream("/application/Flag.png");
+            this.setGraphic(new ImageView(new Image(isFlag, 14, 14, true, true)));
+        } else if (label.equals("mine")) {
+            InputStream isMine = MinesweeperCellLabel.class.getResourceAsStream("/application/Mine.png");
+            this.setGraphic(new ImageView(new Image(isMine, 19, 19, false, true)));
+        } else if (label.equals("unexplodedMine")) {
+            InputStream isUnexplodedMine = MinesweeperCellLabel.class.getResourceAsStream("/application/UnexplodedMine.png");
+            this.setGraphic(new ImageView(new Image(isUnexplodedMine, 19, 19, false, true)));
+        }
     }
     
     public MinesweeperCellLabel(int value) {

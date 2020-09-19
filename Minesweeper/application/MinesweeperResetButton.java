@@ -1,4 +1,5 @@
-package application;
+
+import java.io.InputStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -16,9 +17,13 @@ import javafx.scene.shape.StrokeType;
 
 public class MinesweeperResetButton extends StackPane {
     
-    public static final Label SMILE = new Label(null, new ImageView(new Image("application/smile.png", 26, 26, true, true)));
-    public static final Label SCARED = new Label(null, new ImageView(new Image("application/scared.png", 26, 26, true, true)));
-    public static final Label GAME_OVER = new Label(null, new ImageView(new Image("application/done.png", 26, 26, true, true)));
+    
+    public static InputStream isSmile = MinesweeperResetButton.class.getResourceAsStream("/application/Smile.png");
+    public static InputStream isScared = MinesweeperResetButton.class.getResourceAsStream("/application/scared.png");
+    public static InputStream isGameOver = MinesweeperResetButton.class.getResourceAsStream("/application/done.png");
+    public static Label SMILE = new Label(null, new ImageView(new Image(isSmile, 26, 26, true, true)));
+    public static Label SCARED = new Label(null, new ImageView(new Image(isScared, 26, 26, true, true)));
+    public static Label GAME_OVER = new Label(null, new ImageView(new Image(isGameOver, 26, 26, true, true)));
     
     public MinesweeperResetButton() {
         setMinWidth(30);
