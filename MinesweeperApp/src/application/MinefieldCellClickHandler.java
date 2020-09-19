@@ -1,3 +1,4 @@
+package application;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 startAnimationIfStopped();
                 if(!clickedCell.isRevealed() && !clickedCell.isflagged()) {
-                    MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.SCARED);
+                    MinesweeperDashboard.getResetButton().setButtonLabel("scared");
                 }
                 revealThis(clickedCell);
             }
@@ -87,7 +88,7 @@ public class MinefieldCellClickHandler implements EventHandler<MouseEvent> {
     private void stopGame() {
         Main.setGameOn(false);
         MinesweeperDashboard.getGameClock().stop();
-        MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.GAME_OVER);
+        MinesweeperDashboard.getResetButton().setButtonLabel("done");
     }
     
     private void revealAllUnexplodedMines() {

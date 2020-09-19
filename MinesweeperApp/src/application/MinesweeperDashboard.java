@@ -1,3 +1,4 @@
+package application;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -88,7 +89,7 @@ public class MinesweeperDashboard {
     }
     
     public static void resetDashboard() {
-        resetButton.setButtonLabel(MinesweeperResetButton.SMILE);
+        resetButton.setButtonLabel("smile");
         initGameClock();
     }
     

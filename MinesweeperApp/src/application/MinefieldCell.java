@@ -1,3 +1,4 @@
+package application;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -39,7 +40,7 @@ public class MinefieldCell extends StackPane {
         setOnMousePressed(new MinefieldCellClickHandler());
         setOnMouseReleased(e -> {
             if(Main.gameIsOn())
-                MinesweeperDashboard.getResetButton().setButtonLabel(MinesweeperResetButton.SMILE);
+                MinesweeperDashboard.getResetButton().setButtonLabel("smile");
         });
     }
 

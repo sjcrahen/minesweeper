@@ -1,3 +1,4 @@
+package application;
 
 import java.io.InputStream;
 
@@ -16,15 +17,7 @@ import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
 
 public class MinesweeperResetButton extends StackPane {
-    
-    
-    public static InputStream isSmile = MinesweeperResetButton.class.getResourceAsStream("/application/Smile.png");
-    public static InputStream isScared = MinesweeperResetButton.class.getResourceAsStream("/application/scared.png");
-    public static InputStream isGameOver = MinesweeperResetButton.class.getResourceAsStream("/application/done.png");
-    public static Label SMILE = new Label(null, new ImageView(new Image(isSmile, 26, 26, true, true)));
-    public static Label SCARED = new Label(null, new ImageView(new Image(isScared, 26, 26, true, true)));
-    public static Label GAME_OVER = new Label(null, new ImageView(new Image(isGameOver, 26, 26, true, true)));
-    
+       
     public MinesweeperResetButton() {
         setMinWidth(30);
         setMaxHeight(30);
@@ -38,7 +31,7 @@ public class MinesweeperResetButton extends StackPane {
             new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null),
             new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null),
             null, new BorderWidths(2), null)));
-        setButtonLabel(SMILE);
+        setButtonLabel("smile");
 
         setOnMousePressed(e -> {
             setBorder(new Border(new BorderStroke(
@@ -56,13 +49,22 @@ public class MinesweeperResetButton extends StackPane {
                 new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null),
                 new BorderStrokeStyle(StrokeType.INSIDE, StrokeLineJoin.BEVEL, null, 10, 0, null),
                 null, new BorderWidths(2), null)));
-            setButtonLabel(SMILE);
+            setButtonLabel("smile");
             Main.resetGame();
         });
     }
     
-    public void setButtonLabel(Label label) {
-        getChildren().clear();
-        getChildren().add(label);
-    }
+    public void setButtonLabel(String label) {
+        this.getChildren().clear();
+        if (label.equals("smile")) {
+            InputStream isSmile = getClass().getClassLoader().getResourceAsStream("img/Smile.PNG");
+            this.getChildren().add(new Label(null, new ImageView(new Image(isSmile, 26, 26, true, true))));
+        } else if (label.equals("scared")) {
+            InputStream isScared = getClass().getClassLoader().getResourceAsStream("img/scared.PNG");
+            this.getChildren().add(new Label(null, new ImageView(new Image(isScared, 26, 26, true, true))));
+        } else if (label.equals("done")) {
+            InputStream isGameOver = getClass().getClassLoader().getResourceAsStream("img/done.PNG");
+            this.getChildren().add(new Label(null, new ImageView(new Image(isGameOver, 26, 26, true, true))));
+        }
+    }    
 }

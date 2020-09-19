@@ -1,3 +1,4 @@
+package application;
 
 import java.io.InputStream;
 
@@ -12,13 +13,13 @@ public class MinesweeperCellLabel extends Label {
     
     public MinesweeperCellLabel(String label) {
         if (label.equals("flag")) {
-            InputStream isFlag = MinesweeperCellLabel.class.getResourceAsStream("/application/Flag.png");
+            InputStream isFlag = getClass().getClassLoader().getResourceAsStream("img/Flag.PNG");
             this.setGraphic(new ImageView(new Image(isFlag, 14, 14, true, true)));
         } else if (label.equals("mine")) {
-            InputStream isMine = MinesweeperCellLabel.class.getResourceAsStream("/application/Mine.png");
+            InputStream isMine = getClass().getClassLoader().getResourceAsStream("img/Mine.PNG");
             this.setGraphic(new ImageView(new Image(isMine, 19, 19, false, true)));
         } else if (label.equals("unexplodedMine")) {
-            InputStream isUnexplodedMine = MinesweeperCellLabel.class.getResourceAsStream("/application/UnexplodedMine.png");
+            InputStream isUnexplodedMine = getClass().getClassLoader().getResourceAsStream("img/UnexplodedMine.PNG");
             this.setGraphic(new ImageView(new Image(isUnexplodedMine, 19, 19, false, true)));
         }
     }
